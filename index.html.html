@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دورة اللغة العربية</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+
+  <!-- ✅ Navbar -->
+  <header class="flex justify-between items-center p-4 shadow bg-white dark:bg-gray-800 fade-in">
+    <div class="flex items-center gap-6">
+      <a href="#" class="text-xl font-bold text-blue-600 hover:opacity-80" onclick="showSection('ana-sayfa')">دورة اللغة العربية</a>
+      <nav class="hidden md:flex gap-4">
+        <button onclick="showSection('hizmetler')" class="hover:text-blue-500">الخدمات</button>
+        <button onclick="showSection('hakkinda')" class="hover:text-blue-500">من نحن</button>
+        <button onclick="showSection('foto')" class="hover:text-blue-500">الصور</button>
+        <button onclick="showSection('sss')" class="hover:text-blue-500">الأسئلة الشائعة</button>
+      </nav>
+    </div>
+    <div class="flex items-center gap-2">
+      <input type="text" id="searchInput" placeholder="ابحث في الأسئلة..."
+        class="p-1 px-2 text-sm border rounded dark:bg-gray-700 dark:text-white" />
+      <button id="darkToggle" class="text-xl hover:scale-110 transition">🌙</button>
+    </div>
+  </header>
+
+  <!-- ✅ Ana Sayfa -->
+  <section id="ana-sayfa" class="min-h-screen flex flex-col justify-center items-center text-center p-6 fade-in">
+    <h1 class="text-4xl font-bold mb-4">أهلاً بكم في دورة اللغة العربية</h1>
+    <p class="text-lg max-w-xl">تعلم اللغة العربية أصبح سهلاً من خلال دروس مباشرة وعبر الإنترنت!</p>
+  </section>
+
+  <!-- ✅ Diğer Bölümler (başta gizli) -->
+  <section id="hizmetler" class="p-6 hidden fade-in">
+    <h2 class="text-2xl font-semibold mb-2">الخدمات</h2>
+    <p>دروس خصوصية، مجموعات دراسية، وتعليم العربية للأطفال.</p>
+  </section>
+
+  <section id="hakkinda" class="p-6 hidden fade-in">
+    <h2 class="text-2xl font-semibold mb-2">من نحن</h2>
+    <p>فريق من المدرسين المحترفين بخبرة تفوق 10 سنوات.</p>
+  </section>
+
+  <section id="foto" class="p-6 hidden fade-in">
+    <h2 class="text-2xl font-semibold mb-2">الصور</h2>
+    <p>صور من أجواء الدورة والحصص الدراسية.</p>
+  </section>
+
+  <section id="sss" class="p-6 hidden fade-in">
+    <h2 class="text-2xl font-semibold mb-4">الأسئلة الشائعة</h2>
+    <div id="faqContainer" class="space-y-4">
+      <div class="faq-item border p-4 rounded bg-gray-100 dark:bg-gray-800">
+        <h3 class="faq-question cursor-pointer font-medium">متى تبدأ الدروس؟</h3>
+        <p class="faq-answer hidden mt-2">تبدأ المجموعات الجديدة في الأسبوع الأول من كل شهر.</p>
+      </div>
+      <div class="faq-item border p-4 rounded bg-gray-100 dark:bg-gray-800">
+        <h3 class="faq-question cursor-pointer font-medium">هل الدروس عبر الإنترنت؟</h3>
+        <p class="faq-answer hidden mt-2">تتوفر لدينا دروس حضورية وعبر الإنترنت.</p>
+      </div>
+      <div class="faq-item border p-4 rounded bg-gray-100 dark:bg-gray-800">
+        <h3 class="faq-question cursor-pointer font-medium">ما هي تكلفة الدورة؟</h3>
+        <p class="faq-answer hidden mt-2">تبدأ التكلفة من 500 ليرة تركية شهرياً.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ WhatsApp Butonu -->
+  <a href="https://wa.me/905555555555" target="_blank"
+     class="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+         alt="واتساب" class="h-6 w-6" />
+  </a>
+
+  <!-- ✅ JavaScript -->
+  <script>
+    // Karanlık mod
+    const htmlEl = document.documentElement;
+    const toggleBtn = document.getElementById("darkToggle");
+    if (localStorage.getItem("theme") === "dark") {
+      htmlEl.classList.add("dark");
+    }
+    toggleBtn.addEventListener("click", () => {
+      htmlEl.classList.toggle("dark");
+      localStorage.setItem("theme", htmlEl.classList.contains("dark") ? "dark" : "light");
+    });
+
+    // SSS aç/kapat
+    document.querySelectorAll(".faq-question").forEach(q => {
+      q.addEventListener("click", () => {
+        q.nextElementSibling.classList.toggle("hidden");
+      });
+    });
+
+    // SSS Arama
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll("#faqContainer .faq-item").forEach(item => {
+        const question = item.querySelector(".faq-question").textContent.toLowerCase();
+        item.style.display = question.includes(query) ? "block" : "none";
+      });
+    });
+
+    // Bölüm gösterme
+    function showSection(id) {
+      const sections = ['ana-sayfa', 'hizmetler', 'hakkinda', 'foto', 'sss'];
+      sections.forEach(sec => {
+        document.getElementById(sec).classList.add('hidden');
+      });
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
